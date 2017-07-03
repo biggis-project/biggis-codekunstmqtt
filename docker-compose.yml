@@ -1,0 +1,14 @@
+version: '2.1'
+services:
+  codekunst-mqtt:
+    image: biggis/codekunst-mqtt:1.0
+# https://blog.virtualzone.de/2016/09/docker-compose-link-containers-outside-compose-file-using-external_links.html
+    external_links:
+      - "biggiskafka_kafka_1"
+    networks:
+      - "default"
+      - "biggiskafka_default"
+
+networks:
+  biggiskafka_default:
+    external: true
