@@ -34,7 +34,7 @@ WORKDIR $TARGET
 RUN \
   set -x && \
   apk --update add --virtual build-dependencies curl && \
-  curl -L https://github.com/biggis-project/sensebox-station/releases/download/Codekunst-MQTT-v$CODEKUNSTMQTT_VERSION/CodekunstMQTTAdapter-assembly-${CODEKUNSTMQTT_VERSION}.jar && \
+  curl -L -O https://github.com/biggis-project/sensebox-station/releases/download/Codekunst-MQTT-v$CODEKUNSTMQTT_VERSION/CodekunstMQTTAdapter-assembly-${CODEKUNSTMQTT_VERSION}.jar && \
     apk del build-dependencies && \
     rm -rf /var/cache/apk/*
 
