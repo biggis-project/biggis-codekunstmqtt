@@ -1,2 +1,2 @@
 # biggis-codekunst-mqtt
-Docker container for SenseBoxes CodekunstMQTTAdapter
+Docker container for SenseBoxes CodekunstMQTTAdapter.
