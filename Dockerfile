@@ -9,9 +9,7 @@ MAINTAINER JochenLutz
 ARG SCALA_VERSION=2.11.8
 ENV SCALA_SHORTVERSION=2.11
 ENV SBT_VERSION 0.13.9
-ENV CODEKUNSTMQTT_VERSION=1.1
-ENV CODEKUNST_SERVER='tcp://iot.codekunst.com:1883'
-ENV CODEKUNST_TOPIC='application/3/node/#'
+ENV CODEKUNSTMQTT_VERSION=2.1
 ENV TARGET=/opt/codekunst-mqtt
 
 ARG BUILD_DATE
@@ -33,12 +31,18 @@ WORKDIR $TARGET
 # Install curl
 RUN \
   set -x && \
-  apk --update add --virtual build-dependencies curl && \
+  apk --update add --virtual build-dependencies coreutils curl && \
   curl -L -O https://github.com/biggis-project/sensebox-station/releases/download/Codekunst-MQTT-v$CODEKUNSTMQTT_VERSION/CodekunstMQTTAdapter-assembly-${CODEKUNSTMQTT_VERSION}.jar && \
+    unzip CodekunstMQTTAdapter-assembly-${CODEKUNSTMQTT_VERSION}.jar import-certificate.sh && \
+    chmod +x import-certificate.sh && \
+    ./import-certificate.sh /etc/ssl/certs/java/cacerts && \
     apk del build-dependencies && \
     rm -rf /var/cache/apk/*
 
 ENV PATH $PATH:$TARGET
+
+RUN apk add --no-cache tini
+ENTRYPOINT ["/sbin/tini", "--"]
 
 ADD docker-entrypoint.sh $TARGET
 
