@@ -3,10 +3,10 @@
 #java -Dsbsrs.kafkaServer="$KAFKA_SERVER" -jar /opt/sbsrs/sbsrs.jar
 
 MORE_MQTT_OPTIONS=''
-if [ -n $MQTT_USER ]; then
+if [ "$MQTT_USER" != "" ]; then
     MORE_MQTT_OPTIONS="$MORE_MQTT_OPTIONS -Dmqtt.user=$MQTT_USER"
 fi
-if [ -n $MQTT_PASSWORD ]; then
+if [ "$MQTT_PASSWORD" != "" ]; then
     MORE_MQTT_OPTIONS="$MORE_MQTT_OPTIONS -Dmqtt.password=$MQTT_PASSWORD"
 fi
 
